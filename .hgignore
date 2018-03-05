@@ -1,0 +1,21 @@
+syntax: glob
+__pycache__
+*.egg-info
+.coverage
+.tox
+.svnignore
+.DS_Store
+.git
+Thumbs.db
+.directory
+*~
+*-
+*.pyc
+*.pyo
+*.swp
+*.kpf
+*.orig
+*.bak
+build/
+dist/
+docs/_build/
