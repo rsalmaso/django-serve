@@ -102,6 +102,13 @@ class Command(BaseCommand):
             default=self.default_proc_name,
             help="proc name",
         )
+        parser.add_argument(
+            "--log-level",
+            action="store",
+            dest="loglevel",
+            default="info",
+            help="granularity of error log outputs (debug, info, warning, error, critical)",
+        )
 
     def get_config(self, options):
         config = options.get("config")
@@ -119,6 +126,7 @@ class Command(BaseCommand):
             "--log-file", "-",
             "--access-logfile", "-",
             "--error-logfile", "-",
+            "--log-level", options.get("loglevel"),
             "--reload",
             "--reload-engine", "django",
             options.get("wsgi"),

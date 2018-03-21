@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 * `--name` A base to use with setproctitle for process naming [default=django]
 * `--wsgi` Dotted path to wsgi application [default=settings.WSGI_APPLICATION]
 * `--config' The Gunicorn config file [default=None]
+* `--log-level` The granularity of Error log outputs (debug, info, warning, error, critical) [default=info]
 
 
 ## CHANGES ##
@@ -42,3 +43,4 @@ INSTALLED_APPS = [
 * initial implementation
 * add support for gunicorn config file
 * add custom django reloader
+* add log-level option
