@@ -31,6 +31,7 @@ INSTALLED_APPS = [
 * `--workers` The number of worker processes for handling requests [default max(2, cpu - 1)]
 * `--name` A base to use with setproctitle for process naming [default=django]
 * `--wsgi` Dotted path to wsgi application [default=settings.WSGI_APPLICATION]
+* `--config' The Gunicorn config file [default=None]
 
 
 ## CHANGES ##
@@ -39,3 +40,4 @@ INSTALLED_APPS = [
 ### dev
 
 * initial implementation
+* add support for gunicorn config file

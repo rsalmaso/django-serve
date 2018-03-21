@@ -39,6 +39,12 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         super().add_arguments(parser)
         parser.add_argument(
+            "--config",
+            action="store",
+            dest="config",
+            help="config file",
+        )
+        parser.add_argument(
             "--port",
             action="store",
             dest="port",
@@ -74,9 +80,16 @@ class Command(BaseCommand):
             help="proc name",
         )
 
+    def get_config(self, options):
+        config = options.get("config")
+        if config:
+            return ["--config", config]
+        return []
+
     def handle(self, **options):
         sys.argv = [
             "gunicorn",
+            *self.get_config(options),
             "--bind", "{addr}:{port}".format(port=options.get("port"), addr=options.get("addr")),
             "--workers", options.get("workers"),
             "--name", options.get("name"),
