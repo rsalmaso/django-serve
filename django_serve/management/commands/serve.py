@@ -29,8 +29,31 @@ from django.utils.translation import gettext as _
 
 try:
     from gunicorn.app.wsgiapp import WSGIApplication
+    from gunicorn import reloader
 except ImportError:
     raise Exception("You need gunicorn to be installed")
+
+
+class DjangoReloader(reloader.InotifyReloader):
+    """Patch InotifyReloader to process only py files"""
+
+    def run(self):
+        self._dirs = self.get_dirs()
+
+        for dirname in self._dirs:
+            self._watcher.add_watch(dirname, mask=self.event_mask)
+
+        for event in self._watcher.event_gen():
+            if event is None:
+                continue
+
+            filename = event[3]
+            if filename.endswith((".py", ".env", ".mo")):
+                self._callback(filename)
+
+
+reloader.preferred_reloader = DjangoReloader
+reloader.reloader_engines["django"] = DjangoReloader
 
 
 class Command(BaseCommand):
@@ -97,7 +120,7 @@ class Command(BaseCommand):
             "--access-logfile", "-",
             "--error-logfile", "-",
             "--reload",
-            "--reload-engine", "auto",
+            "--reload-engine", "django",
             options.get("wsgi"),
         ]
         WSGIApplication("").run()

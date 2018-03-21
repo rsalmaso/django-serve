@@ -41,3 +41,4 @@ INSTALLED_APPS = [
 
 * initial implementation
 * add support for gunicorn config file
+* add custom django reloader
