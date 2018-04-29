@@ -34,6 +34,7 @@ INSTALLED_APPS = [
 * `--config' The Gunicorn config file [default=None]
 * `--log-level` The granularity of Error log outputs (debug, info, warning, error, critical) [default=info]
 * `--logformat` The access log format (default='"%(m)s %(U)s%(q)s %(H)s" %(s)s %(B)s' same as default django runserver)
+* `--logger-class` The logger you want to use to log events [default=gunicorn_color.Logger if installed else gunicorn default one]
 
 
 ## CHANGES ##
@@ -46,3 +47,4 @@ INSTALLED_APPS = [
 * add custom django reloader
 * add log-level option
 * add logformat configuration
+* add logger-class option

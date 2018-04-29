@@ -33,6 +33,12 @@ try:
 except ImportError:
     raise Exception("You need gunicorn to be installed")
 
+try:
+    import gunicorn_color
+    logger_class = "gunicorn_color.Logger"
+except ImportError:
+    logger_class = None
+
 
 class DjangoReloader(reloader.InotifyReloader):
     """Patch InotifyReloader to process only py files"""
@@ -110,6 +116,13 @@ class Command(BaseCommand):
             help="log format",
         )
         parser.add_argument(
+            "--logger-class",
+            action="store",
+            dest="logger_class",
+            default=logger_class,
+            help="the logger you want to use to log events",
+        )
+        parser.add_argument(
             "--log-level",
             action="store",
             dest="loglevel",
@@ -121,6 +134,12 @@ class Command(BaseCommand):
         config = options.get("config")
         if config:
             return ["--config", config]
+        return []
+
+    def get_logger_class(self, options):
+        logger_class = options.get("logger_class")
+        if logger_class:
+            return ["--logger-class", logger_class]
         return []
 
     def handle(self, **options):
@@ -135,6 +154,7 @@ class Command(BaseCommand):
             "--access-logfile", "-",
             "--error-logfile", "-",
             "--log-level", options.get("loglevel"),
+            *self.get_logger_class(options),
             "--reload",
             "--reload-engine", "django",
             options.get("wsgi"),
