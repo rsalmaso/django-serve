@@ -33,6 +33,7 @@ INSTALLED_APPS = [
 * `--wsgi` Dotted path to wsgi application [default=settings.WSGI_APPLICATION]
 * `--config' The Gunicorn config file [default=None]
 * `--log-level` The granularity of Error log outputs (debug, info, warning, error, critical) [default=info]
+* `--logformat` The access log format (default='"%(m)s %(U)s%(q)s %(H)s" %(s)s %(B)s' same as default django runserver)
 
 
 ## CHANGES ##
@@ -44,3 +45,4 @@ INSTALLED_APPS = [
 * add support for gunicorn config file
 * add custom django reloader
 * add log-level option
+* add logformat configuration

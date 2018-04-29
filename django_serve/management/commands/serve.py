@@ -103,6 +103,13 @@ class Command(BaseCommand):
             help="proc name",
         )
         parser.add_argument(
+            "--logformat",
+            action="store",
+            dest="logformat",
+            default=self.default_logformat,
+            help="log format",
+        )
+        parser.add_argument(
             "--log-level",
             action="store",
             dest="loglevel",
@@ -124,6 +131,7 @@ class Command(BaseCommand):
             "--workers", options.get("workers"),
             "--name", options.get("name"),
             "--log-file", "-",
+            "--access-logformat", options.get("logformat"),
             "--access-logfile", "-",
             "--error-logfile", "-",
             "--log-level", options.get("loglevel"),
@@ -162,3 +170,10 @@ class Command(BaseCommand):
         app = settings.WSGI_APPLICATION.split(".")
         app = "{}:{}".format(".".join(app[:-1]), app[-1])
         return os.environ.get("DJANGO_DEFAULT_WSGI", app)
+
+    @property
+    def default_logformat(self):
+        return self.get_default_logformat()
+
+    def get_default_logformat(self):
+        return os.environ.get("LOG_FORMAT", '"%(m)s %(U)s%(q)s %(H)s" %(s)s %(B)s')
