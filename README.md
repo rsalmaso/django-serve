@@ -39,6 +39,9 @@ INSTALLED_APPS = [
 
 ## CHANGES ##
 
+### dev
+
+* add gunicorn-color as required
 
 ### 0.1.0
 

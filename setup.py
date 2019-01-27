@@ -37,6 +37,6 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: JavaScript",
     ],
-    install_requires=["gunicorn", "inotify"],
+    install_requires=["gunicorn", "gunicorn-color", "inotify"],
     zip_safe=False,
 )
