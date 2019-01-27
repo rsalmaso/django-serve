@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 ## CHANGES ##
 
 
-### dev
+### 0.1.0
 
 * initial implementation
 * add support for gunicorn config file
