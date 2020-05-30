@@ -34,7 +34,8 @@ except ImportError:
     raise Exception("You need gunicorn to be installed")
 
 try:
-    import gunicorn_color
+    import gunicorn_color  # noqa: F401
+
     logger_class = "gunicorn_color.Logger"
 except ImportError:
     logger_class = None
@@ -68,24 +69,13 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         super().add_arguments(parser)
         parser.add_argument(
-            "--config",
-            action="store",
-            dest="config",
-            help="config file",
+            "--config", action="store", dest="config", help="config file",
         )
         parser.add_argument(
-            "--port",
-            action="store",
-            dest="port",
-            default=self.default_port,
-            help="port to bind",
+            "--port", action="store", dest="port", default=self.default_port, help="port to bind",
         )
         parser.add_argument(
-            "--addr",
-            action="store",
-            dest="addr",
-            default=self.default_addr,
-            help="address to bind",
+            "--addr", action="store", dest="addr", default=self.default_addr, help="address to bind",
         )
         parser.add_argument(
             "--workers",
@@ -95,25 +85,13 @@ class Command(BaseCommand):
             help="workers",
         )
         parser.add_argument(
-            "--wsgi",
-            action="store",
-            dest="wsgi",
-            default=self.default_wsgi,
-            help="wsgi module to call",
+            "--wsgi", action="store", dest="wsgi", default=self.default_wsgi, help="wsgi module to call",
         )
         parser.add_argument(
-            "--name",
-            action="store",
-            dest="name",
-            default=self.default_proc_name,
-            help="proc name",
+            "--name", action="store", dest="name", default=self.default_proc_name, help="proc name",
         )
         parser.add_argument(
-            "--logformat",
-            action="store",
-            dest="logformat",
-            default=self.default_logformat,
-            help="log format",
+            "--logformat", action="store", dest="logformat", default=self.default_logformat, help="log format",
         )
         parser.add_argument(
             "--logger-class",
@@ -146,17 +124,26 @@ class Command(BaseCommand):
         sys.argv = [
             "gunicorn",
             *self.get_config(options),
-            "--bind", "{addr}:{port}".format(port=options.get("port"), addr=options.get("addr")),
-            "--workers", options.get("workers"),
-            "--name", options.get("name"),
-            "--log-file", "-",
-            "--access-logformat", options.get("logformat"),
-            "--access-logfile", "-",
-            "--error-logfile", "-",
-            "--log-level", options.get("loglevel"),
+            "--bind",
+            "{addr}:{port}".format(port=options.get("port"), addr=options.get("addr")),
+            "--workers",
+            options.get("workers"),
+            "--name",
+            options.get("name"),
+            "--log-file",
+            "-",
+            "--access-logformat",
+            options.get("logformat"),
+            "--access-logfile",
+            "-",
+            "--error-logfile",
+            "-",
+            "--log-level",
+            options.get("loglevel"),
             *self.get_logger_class(options),
             "--reload",
-            "--reload-engine", "django",
+            "--reload-engine",
+            "django",
             options.get("wsgi"),
         ]
         WSGIApplication("").run()
