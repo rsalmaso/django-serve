@@ -23,8 +23,6 @@ from .version import get_version
 VERSION = (0, 1, 1, "final", 0)
 
 __version__ = get_version(VERSION)
-__author__ = "Raffaele Salmaso"
-__email__ = "raffaele@salmaso.org"
 
 
 default_app_config = "django_serve.apps.ServeConfig"
