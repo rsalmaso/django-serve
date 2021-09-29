@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 * use black
 * drop Python 3.5 support
 * add Django 3.2 support
+* add Python 3.9 and 3.10 support
 
 ### 0.1.1
 
