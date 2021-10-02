@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 ### dev
 
 * use black
+* drop Python 3.5 support
 
 ### 0.1.1
 
