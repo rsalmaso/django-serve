@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 * add Django 3.2 support
 * add Python 3.9 and 3.10 support
 * add django-serve command
+* add support for python -m django_serve
 
 ### 0.1.1
 
