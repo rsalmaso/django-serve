@@ -80,9 +80,10 @@ class Command(BaseCommand):
         parser.add_argument(
             "--log-level",
             action="store",
+            choices=["debug", "info", "warning", "error", "critical"],
             dest="loglevel",
             default="info",
-            help="granularity of error log outputs (debug, info, warning, error, critical)",
+            help="granularity of error log outputs",
         )
 
     def get_config(self, options):
