@@ -145,7 +145,7 @@ class Command(BaseCommand):
             *self.get_logger_class(options),
             "--reload",
             "--reload-engine",
-            "inotify",
+            "auto",
             options.get("wsgi"),
         ]
         subprocess.run(args)
