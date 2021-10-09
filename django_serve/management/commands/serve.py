@@ -68,7 +68,7 @@ class Command(BaseCommand):
             "--workers",
             action="store",
             dest="workers",
-            default=str(max(2, multiprocessing.cpu_count() - 1)),
+            default=str(max(1, (multiprocessing.cpu_count() + 1) // 2)),
             help="workers",
         )
         parser.add_argument(

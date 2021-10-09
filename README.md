@@ -28,7 +28,7 @@ INSTALLED_APPS = [
 
 * `--addr` The socket address to bind [default=127.0.0.1]
 * `--port` The socket port to bind [default=8000]
-* `--workers` The number of worker processes for handling requests [default max(2, cpu - 1)]
+* `--workers` The number of worker processes for handling requests [default max(1, (cpu + 1) / 2)]
 * `--name` A base to use with setproctitle for process naming [default=django]
 * `--wsgi` Dotted path to wsgi application [default=settings.WSGI_APPLICATION]
 * `--config' The Gunicorn config file [default=None]
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 * add support for python -m django_serve
 * install inotify only on linux platform
 * add --reload-engine and DJANGO_DEFAULT_RELOAD_ENGINE option
+* update default workers count
 
 ### 0.1.1
 
