@@ -85,6 +85,16 @@ class Command(BaseCommand):
             default=self.default_proc_name,
             help="proc name",
         )
+        inotify_option = ["inotify"] if reloader.has_inotify else []
+        engine_options = ["auto", *inotify_option, "poll", "none"]
+        parser.add_argument(
+            "--reload-engine",
+            action="store",
+            dest="reload_engine",
+            choices=engine_options,
+            default=self.default_reload_engine,
+            help=f"reload engine (default={self.default_reload_engine})",
+        )
         parser.add_argument(
             "--logformat",
             action="store",
@@ -120,6 +130,16 @@ class Command(BaseCommand):
             return ["--logger-class", logger_class]
         return []
 
+    def get_reload_engine(self, options):
+        engine = options.get("reload_engine")
+        if engine and engine != "none":
+            return [
+                "--reload",
+                "--reload-engine",
+                options.get("reload_engine"),
+            ]
+        return []
+
     def handle(self, **options):
         args = [
             "python",
@@ -143,9 +163,7 @@ class Command(BaseCommand):
             "--log-level",
             options.get("loglevel"),
             *self.get_logger_class(options),
-            "--reload",
-            "--reload-engine",
-            "auto",
+            *self.get_reload_engine(options),
             options.get("wsgi"),
         ]
         subprocess.run(args)
@@ -163,6 +181,13 @@ class Command(BaseCommand):
 
     def get_default_addr(self):
         return os.environ.get("DJANGO_DEFAULT_ADDR", "127.0.0.1")
+
+    @cached_property
+    def default_reload_engine(self):
+        return self.get_default_reload_engine()
+
+    def get_default_reload_engine(self):
+        return os.environ.get("DJANGO_DEFAULT_RELOAD_ENGINE", "auto")
 
     @cached_property
     def default_proc_name(self):

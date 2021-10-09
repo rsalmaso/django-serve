@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 * `--log-level` The granularity of Error log outputs (debug, info, warning, error, critical) [default=info]
 * `--logformat` The access log format (default='"%(m)s %(U)s%(q)s %(H)s" %(s)s %(B)s' same as default django runserver)
 * `--logger-class` The logger you want to use to log events [default=gunicorn_color.Logger if installed else gunicorn default one]
+* `--reload-engine` Which reload engine to use between polling or inotify (or not at all) [default=auto]
 
 
 ## CHANGES ##
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
 * add django-serve command
 * add support for python -m django_serve
 * install inotify only on linux platform
+* add --reload-engine and DJANGO_DEFAULT_RELOAD_ENGINE option
 
 ### 0.1.1
 
