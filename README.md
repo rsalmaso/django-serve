@@ -9,7 +9,7 @@ A gunicorn based django runserver command.
 
 and add to `INSTALLED_APPS`
 
-```
+```!python
 #!python
 INSTALLED_APPS = [
     ...
@@ -31,7 +31,7 @@ INSTALLED_APPS = [
 * `--workers` The number of worker processes for handling requests [default max(1, (cpu + 1) / 2)]
 * `--name` A base to use with setproctitle for process naming [default=django]
 * `--wsgi` Dotted path to wsgi application [default=settings.WSGI_APPLICATION]
-* `--config' The Gunicorn config file [default=None]
+* `--config` The Gunicorn config file [default=None]
 * `--log-level` The granularity of Error log outputs (debug, info, warning, error, critical) [default=info]
 * `--logformat` The access log format (default='"%(m)s %(U)s%(q)s %(H)s" %(s)s %(B)s' same as default django runserver)
 * `--logger-class` The logger you want to use to log events [default=gunicorn_color.Logger if installed else gunicorn default one]
