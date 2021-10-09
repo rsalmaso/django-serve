@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
 ## CHANGES ##
 
-### dev
+### 0.2.0
 
 * use black
 * drop Python 3.5 support
