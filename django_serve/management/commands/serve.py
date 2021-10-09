@@ -20,7 +20,7 @@
 
 import multiprocessing
 import os
-import sys
+import subprocess
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
@@ -28,7 +28,6 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext as _
 
 try:
-    from gunicorn.app.wsgiapp import WSGIApplication
     from gunicorn import reloader
 except ImportError:
     raise Exception("You need gunicorn to be installed")
@@ -39,28 +38,6 @@ try:
     logger_class = "gunicorn_color.Logger"
 except ImportError:
     logger_class = None
-
-
-class DjangoReloader(reloader.InotifyReloader):
-    """Patch InotifyReloader to process only py files"""
-
-    def run(self):
-        self._dirs = self.get_dirs()
-
-        for dirname in self._dirs:
-            self._watcher.add_watch(dirname, mask=self.event_mask)
-
-        for event in self._watcher.event_gen():
-            if event is None:
-                continue
-
-            filename = event[3]
-            if filename.endswith((".py", ".env", ".mo")):
-                self._callback(filename)
-
-
-reloader.preferred_reloader = DjangoReloader
-reloader.reloader_engines["django"] = DjangoReloader
 
 
 class Command(BaseCommand):
@@ -121,8 +98,10 @@ class Command(BaseCommand):
         return []
 
     def handle(self, **options):
-        sys.argv = [
-            "gunicorn",
+        args = [
+            "python",
+            "-m",
+            "django_serve",
             *self.get_config(options),
             "--bind",
             "{addr}:{port}".format(port=options.get("port"), addr=options.get("addr")),
@@ -143,10 +122,10 @@ class Command(BaseCommand):
             *self.get_logger_class(options),
             "--reload",
             "--reload-engine",
-            "django",
+            "inotify",
             options.get("wsgi"),
         ]
-        WSGIApplication("").run()
+        subprocess.run(args)
 
     @cached_property
     def default_port(self):
