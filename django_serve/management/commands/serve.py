@@ -127,7 +127,7 @@ class Command(BaseCommand):
             "django_serve",
             *self.get_config(options),
             "--bind",
-            "{addr}:{port}".format(port=options.get("port"), addr=options.get("addr")),
+            f"{options.get('addr')}:{options.get('port')}",
             "--workers",
             options.get("workers"),
             "--name",
@@ -177,8 +177,7 @@ class Command(BaseCommand):
 
     def get_default_wsgi(self):
         app = settings.WSGI_APPLICATION.split(".")
-        app = "{}:{}".format(".".join(app[:-1]), app[-1])
-        return os.environ.get("DJANGO_DEFAULT_WSGI", app)
+        return os.environ.get("DJANGO_DEFAULT_WSGI", f"{'.'.join(app[:-1])}:{app[-1]}")
 
     @property
     def default_logformat(self):
